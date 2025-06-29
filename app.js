@@ -78,6 +78,54 @@ app.get('/api/v1/tours/:id', (req, res) => {
   res.status(200).json({ status: 'success', data: { tours: tour } });
 });
 
+/**
+ * PATCH http method
+ */
+
+app.patch('/api/v1/tours/:id', (req, res) => {
+  const id = req.params.id * 1;
+  const tour = tours.find((item) => item.id === id);
+
+  if (!tour) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid tour',
+    });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tours: 'Tour updated successfully',
+    },
+  });
+});
+
+/**
+ * DELETE http method
+ *
+ * When delete is success we send 204 status and data as null, simply to show that the data we deleted no
+ * longer exists
+ *
+ */
+
+app.delete('/api/v1/tours/:id', (req, res) => {
+  const id = req.params.id * 1;
+  const tour = tours.find((item) => item.id === id);
+
+  if (!tour) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid tour',
+    });
+  }
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
+
 const port = 5000;
 /**
  * Listening
