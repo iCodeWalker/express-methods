@@ -24,46 +24,17 @@ const tours = JSON.parse(
 );
 
 /**
+ * GET http method : getting all tours data
  *
- * Refactoring our code
- *
- * Creating separate callback functions
  */
-
-/**
- * getAllTours : callback function getting all tours
- */
-const getAllTours = (req, res) => {
+app.get('/api/v1/tours', (req, res) => {
   res.status(200).json({ status: 'success', data: { tours: tours } });
-};
+});
 
 /**
- * getTour : callback function for getting a single tour
+ * POST http method
  */
-
-const getTour = (req, res) => {
-  /**
-   * req.params is where all the params are stored
-   */
-  // console.log(req.params)
-  const id = req.params.id * 1;
-  const tour = tours.find((item) => item.id === id);
-
-  if (!tour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid tour',
-    });
-  }
-
-  res.status(200).json({ status: 'success', data: { tours: tour } });
-};
-
-/**
- * createTour : callback function for creating a tour
- */
-
-const createTour = (req, res) => {
+app.post('/api/v1/tours', (req, res) => {
   // console.log(req.body);
   const newId = tours[tours.length - 1].id + 1;
   const newTour = Object.assign({ id: newId }, req.body);
@@ -82,13 +53,36 @@ const createTour = (req, res) => {
       });
     }
   );
-};
+});
 
 /**
- * updateTour : callback function for updating a tour
+ * GET http method : getting data of single tour
+ * adding dynamic variable to url
+ *
+ */
+app.get('/api/v1/tours/:id', (req, res) => {
+  /**
+   * req.params is where all the params are stored
+   */
+  // console.log(req.params)
+  const id = req.params.id * 1;
+  const tour = tours.find((item) => item.id === id);
+
+  if (!tour) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid tour',
+    });
+  }
+
+  res.status(200).json({ status: 'success', data: { tours: tour } });
+});
+
+/**
+ * PATCH http method
  */
 
-const updateTour = (req, res) => {
+app.patch('/api/v1/tours/:id', (req, res) => {
   const id = req.params.id * 1;
   const tour = tours.find((item) => item.id === id);
 
@@ -105,13 +99,17 @@ const updateTour = (req, res) => {
       tours: 'Tour updated successfully',
     },
   });
-};
+});
 
 /**
- * deleteTour : callback function for deleting a tour
+ * DELETE http method
+ *
+ * When delete is success we send 204 status and data as null, simply to show that the data we deleted no
+ * longer exists
+ *
  */
 
-const deleteTour = (req, res) => {
+app.delete('/api/v1/tours/:id', (req, res) => {
   const id = req.params.id * 1;
   const tour = tours.find((item) => item.id === id);
 
@@ -126,52 +124,7 @@ const deleteTour = (req, res) => {
     status: 'success',
     data: null,
   });
-};
-
-/**
- * GET http method : getting all tours data
- *
- */
-// app.get('/api/v1/tours', getAllTours);
-
-/**
- * POST http method
- */
-// app.post('/api/v1/tours', getTour);
-
-/**
- * GET http method : getting data of single tour
- * adding dynamic variable to url
- *
- */
-// app.get('/api/v1/tours/:id', createTour);
-
-/**
- * PATCH http method
- */
-
-// app.patch('/api/v1/tours/:id', updateTour);
-
-/**
- * DELETE http method
- *
- * When delete is success we send 204 status and data as null, simply to show that the data we deleted no
- * longer exists
- *
- */
-
-// app.delete('/api/v1/tours/:id', deleteTour);
-
-/**
- * Route method :  used for chaning http methodds
- */
-
-app.route('/api/v1/tours').get(getAllTours).post(createTour);
-app
-  .route('/api/v1/tours/:id')
-  .get(getTour)
-  .patch(updateTour)
-  .delete(deleteTour);
+});
 
 const port = 5000;
 /**
