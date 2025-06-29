@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import express from 'express';
+import morgan from 'morgan';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,10 +11,30 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 /**
+ * 3rd party middleware morgan : used to log requests
+ */
+app.use(morgan('dev'));
+
+/**
  * By default express does not put the body data on the request parameter, we have to do it using a middleware
  * express.json() is a middleware that puts the body data on the req object
  */
 app.use(express.json());
+
+/**
+ *
+ * Creating custom middleware
+ */
+
+app.use((req, res, next) => {
+  console.log('From middleware');
+  next();
+});
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
 
 /**
  * Read the data from "dev-data"
@@ -34,7 +55,12 @@ const tours = JSON.parse(
  * getAllTours : callback function getting all tours
  */
 const getAllTours = (req, res) => {
-  res.status(200).json({ status: 'success', data: { tours: tours } });
+  console.log(req.requestTime);
+  res.status(200).json({
+    status: 'success',
+    requestedAt: req.requestTime,
+    data: { tours: tours },
+  });
 };
 
 /**
