@@ -24,7 +24,8 @@ const tours = JSON.parse(
 );
 
 /**
- * GET http method
+ * GET http method : getting all tours data
+ *
  */
 app.get('/api/v1/tours', (req, res) => {
   res.status(200).json({ status: 'success', data: { tours: tours } });
@@ -52,6 +53,29 @@ app.post('/api/v1/tours', (req, res) => {
       });
     }
   );
+});
+
+/**
+ * GET http method : getting data of single tour
+ * adding dynamic variable to url
+ *
+ */
+app.get('/api/v1/tours/:id', (req, res) => {
+  /**
+   * req.params is where all the params are stored
+   */
+  // console.log(req.params)
+  const id = req.params.id * 1;
+  const tour = tours.find((item) => item.id === id);
+
+  if (!tour) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid tour',
+    });
+  }
+
+  res.status(200).json({ status: 'success', data: { tours: tour } });
 });
 
 const port = 5000;
