@@ -48,11 +48,11 @@ const tours = JSON.parse(
  *
  * Refactoring our code
  *
- * Creating separate callback functions
+ * Creating separate Route handlers
  */
 
 /**
- * getAllTours : callback function getting all tours
+ * getAllTours : Route handler getting all tours
  */
 const getAllTours = (req, res) => {
   console.log(req.requestTime);
@@ -64,7 +64,7 @@ const getAllTours = (req, res) => {
 };
 
 /**
- * getTour : callback function for getting a single tour
+ * getTour : Route handler for getting a single tour
  */
 
 const getTour = (req, res) => {
@@ -86,7 +86,7 @@ const getTour = (req, res) => {
 };
 
 /**
- * createTour : callback function for creating a tour
+ * createTour : Route handler for creating a tour
  */
 
 const createTour = (req, res) => {
@@ -111,7 +111,7 @@ const createTour = (req, res) => {
 };
 
 /**
- * updateTour : callback function for updating a tour
+ * updateTour : Route handler for updating a tour
  */
 
 const updateTour = (req, res) => {
@@ -134,7 +134,7 @@ const updateTour = (req, res) => {
 };
 
 /**
- * deleteTour : callback function for deleting a tour
+ * deleteTour : Route handler for deleting a tour
  */
 
 const deleteTour = (req, res) => {
@@ -151,6 +151,41 @@ const deleteTour = (req, res) => {
   res.status(204).json({
     status: 'success',
     data: null,
+  });
+};
+
+/**
+ * Route handlers of Users
+ */
+
+const getAllUsers = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not in use',
+  });
+};
+const createUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not in use',
+  });
+};
+const getUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not in use',
+  });
+};
+const updateUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not in use',
+  });
+};
+const deleteUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not in use',
   });
 };
 
@@ -198,6 +233,19 @@ app
   .get(getTour)
   .patch(updateTour)
   .delete(deleteTour);
+
+/**
+ *
+ * Users route
+ */
+
+app.route('/api/v1/users').get(getAllUsers).post(createUser);
+
+app
+  .route('/api/v1/users/:id')
+  .get(getUser)
+  .patch(updateUser)
+  .delete(deleteUser);
 
 const port = 5000;
 /**
