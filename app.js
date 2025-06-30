@@ -227,25 +227,45 @@ const deleteUser = (req, res) => {
  * Route method :  used for chaning http methodds
  */
 
-app.route('/api/v1/tours').get(getAllTours).post(createTour);
-app
-  .route('/api/v1/tours/:id')
-  .get(getTour)
-  .patch(updateTour)
-  .delete(deleteTour);
+// app.route('/api/v1/tours').get(getAllTours).post(createTour);
+// app
+//   .route('/api/v1/tours/:id')
+//   .get(getTour)
+//   .patch(updateTour)
+//   .delete(deleteTour);
+
+/**
+ * Creating multiple routers
+ *
+ * To connect these new router we can use it as a middleware
+ */
+
+const tourRouter = express.Router();
+
+tourRouter.route('/').get(getAllTours).post(createTour);
+tourRouter.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
+
+app.use('/api/v1/tours', tourRouter);
 
 /**
  *
  * Users route
  */
 
-app.route('/api/v1/users').get(getAllUsers).post(createUser);
+// app.route('/api/v1/users').get(getAllUsers).post(createUser);
 
-app
-  .route('/api/v1/users/:id')
-  .get(getUser)
-  .patch(updateUser)
-  .delete(deleteUser);
+// app
+//   .route('/api/v1/users/:id')
+//   .get(getUser)
+//   .patch(updateUser)
+//   .delete(deleteUser);
+
+const userRouter = express.Router();
+
+userRouter.route('/').get(getAllUsers).post(createUser);
+userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
+
+app.use('/api/v1/users', userRouter);
 
 const port = 5000;
 /**
