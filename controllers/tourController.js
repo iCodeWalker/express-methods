@@ -15,6 +15,20 @@ const tours = JSON.parse(
 );
 
 /**
+ * checkBody : Check body middleware
+ */
+
+export const checkBody = (req, res, next, value) => {
+  if (!req.body.name || !req.body.price) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Missing price or name',
+    });
+  }
+  next();
+};
+
+/**
  *  checkTourId : param middleware
  */
 
