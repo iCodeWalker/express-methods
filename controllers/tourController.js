@@ -15,6 +15,23 @@ const tours = JSON.parse(
 );
 
 /**
+ *  checkTourId : param middleware
+ */
+
+export const checkTourId = (req, res, next, value) => {
+  const id = value * 1;
+  const tour = tours.find((item) => item.id === id);
+
+  if (!tour) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid tour',
+    });
+  }
+  next();
+};
+
+/**
  * getAllTours : Route handler getting all tours
  */
 export const getAllTours = (req, res) => {
@@ -35,15 +52,16 @@ export const getTour = (req, res) => {
    * req.params is where all the params are stored
    */
   // console.log(req.params)
+
   const id = req.params.id * 1;
   const tour = tours.find((item) => item.id === id);
 
-  if (!tour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid tour',
-    });
-  }
+  //   if (!tour) {
+  //     return res.status(404).json({
+  //       status: 'fail',
+  //       message: 'Invalid tour',
+  //     });
+  //   }
 
   res.status(200).json({ status: 'success', data: { tours: tour } });
 };
@@ -78,15 +96,15 @@ export const createTour = (req, res) => {
  */
 
 export const updateTour = (req, res) => {
-  const id = req.params.id * 1;
-  const tour = tours.find((item) => item.id === id);
+  //   const id = req.params.id * 1;
+  //   const tour = tours.find((item) => item.id === id);
 
-  if (!tour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid tour',
-    });
-  }
+  //   if (!tour) {
+  //     return res.status(404).json({
+  //       status: 'fail',
+  //       message: 'Invalid tour',
+  //     });
+  //   }
 
   res.status(200).json({
     status: 'success',
@@ -101,15 +119,15 @@ export const updateTour = (req, res) => {
  */
 
 export const deleteTour = (req, res) => {
-  const id = req.params.id * 1;
-  const tour = tours.find((item) => item.id === id);
+  //   const id = req.params.id * 1;
+  //   const tour = tours.find((item) => item.id === id);
 
-  if (!tour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid tour',
-    });
-  }
+  //   if (!tour) {
+  //     return res.status(404).json({
+  //       status: 'fail',
+  //       message: 'Invalid tour',
+  //     });
+  //   }
 
   res.status(204).json({
     status: 'success',
