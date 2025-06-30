@@ -5,9 +5,6 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 import morgan from 'morgan';
 
-import tourRouter from './routes/tourRoutes.js';
-import userRouter from './routes/userRoutes.js';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -243,10 +240,10 @@ const deleteUser = (req, res) => {
  * To connect these new router we can use it as a middleware
  */
 
-// const tourRouter = express.Router();
+const tourRouter = express.Router();
 
-// tourRouter.route('/').get(getAllTours).post(createTour);
-// tourRouter.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
+tourRouter.route('/').get(getAllTours).post(createTour);
+tourRouter.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
 
 app.use('/api/v1/tours', tourRouter);
 
@@ -263,19 +260,17 @@ app.use('/api/v1/tours', tourRouter);
 //   .patch(updateUser)
 //   .delete(deleteUser);
 
-// const userRouter = express.Router();
+const userRouter = express.Router();
 
-// userRouter.route('/').get(getAllUsers).post(createUser);
-// userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
+userRouter.route('/').get(getAllUsers).post(createUser);
+userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
 app.use('/api/v1/users', userRouter);
 
-export default app;
-
-// const port = 5000;
-// /**
-//  * Listening
-//  */
-// app.listen(port, () => {
-//   console.log(`Started listening on port ${port}`);
-// });
+const port = 5000;
+/**
+ * Listening
+ */
+app.listen(port, () => {
+  console.log(`Started listening on port ${port}`);
+});
