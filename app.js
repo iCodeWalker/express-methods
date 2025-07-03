@@ -16,7 +16,13 @@ const app = express();
 /**
  * 3rd party middleware morgan : used to log requests
  */
-app.use(morgan('dev'));
+
+/**
+ * Logging to be done only when we are in development env
+ */
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 /**
  * By default express does not put the body data on the request parameter, we have to do it using a middleware
