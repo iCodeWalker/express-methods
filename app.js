@@ -25,6 +25,14 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 /**
+ * Serving static file present on our system
+ * Works only for static file
+ * We will be using a middleware
+ */
+
+app.use(express.static(`${__dirname}/public`));
+
+/**
  *
  * Creating custom middleware
  */
